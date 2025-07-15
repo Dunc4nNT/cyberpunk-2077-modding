@@ -19,16 +19,16 @@ class MoreLevelsService extends ScriptableService {
         TweakDBManager.SetFlat(t"Proficiencies.Level.maxLevel", this.maxLevel);
         TweakDBManager.UpdateRecord(t"Proficiencies.Level");
 
-        TweakDBManager.SetFlat(t"LootPrereqs.BelowMaxPlayerLevelPrereq.valueToCheck", this.maxLevel);
+        TweakDBManager.SetFlat(t"LootPrereqs.BelowMaxPlayerLevelPrereq.valueToCheck", Cast<Float>(this.maxLevel));
         TweakDBManager.UpdateRecord(t"LootPrereqs.BelowMaxPlayerLevelPrereq");
 
-        TweakDBManager.SetFlat(t"LootPrereqs.CyberpsychoWeaponInLootPrereq_end_inline1.valueToCheck", this.maxLevel);
+        TweakDBManager.SetFlat(t"LootPrereqs.CyberpsychoWeaponInLootPrereq_end_inline1.valueToCheck", Cast<Float>(this.maxLevel));
         TweakDBManager.UpdateRecord(t"LootPrereqs.CyberpsychoWeaponInLootPrereq_end_inline1");
 
-        TweakDBManager.SetFlat(t"LootPrereqs.LegendaryCWLevelAvailabilityAtVendor_inline1.valueToCheck", this.maxLevel);
+        TweakDBManager.SetFlat(t"LootPrereqs.LegendaryCWLevelAvailabilityAtVendor_inline1.valueToCheck", Cast<Float>(this.maxLevel));
         TweakDBManager.UpdateRecord(t"LootPrereqs.LegendaryCWLevelAvailabilityAtVendor_inline1");
 
-        TweakDBManager.SetFlat(t"LootPrereqs.MaxPlayerLevelPrereq.valueToCheck", this.maxLevel);
+        TweakDBManager.SetFlat(t"LootPrereqs.MaxPlayerLevelPrereq.valueToCheck", Cast<Float>(this.maxLevel));
         TweakDBManager.UpdateRecord(t"LootPrereqs.MaxPlayerLevelPrereq");
     }
 
