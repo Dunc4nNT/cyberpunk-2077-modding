@@ -1,6 +1,6 @@
 module NeverToxic.MoreLevels
 
-class MoreLevelsService extends ScriptableService {
+public class MoreLevelsService extends ScriptableService {
     @runtimeProperty("ModSettings.mod", "More Levels")
     @runtimeProperty("ModSettings.displayName", "Maximum Player Level")
     @runtimeProperty("ModSettings.description", "Set the maximum player level.")
@@ -11,7 +11,7 @@ class MoreLevelsService extends ScriptableService {
 
     let originalMaxCwCap: Float;
 
-    private cb func OnInitialize() {
+    private cb func OnInitialize() -> Void {
         this.originalMaxCwCap = FromVariant<Float>(TweakDBInterface.GetFlat(t"BaseStats.Humanity.max"));
 
         ModSettings.RegisterListenerToClass(this);
@@ -20,7 +20,7 @@ class MoreLevelsService extends ScriptableService {
         this.SetMaxCyberWareCapacity();
     }
 
-    public func SetMaxPlayerLevel() {
+    public func SetMaxPlayerLevel() -> Void {
         TweakDBManager.SetFlat(t"Proficiencies.Level.maxLevel", this.maxLevel);
         TweakDBManager.UpdateRecord(t"Proficiencies.Level");
 
@@ -37,11 +37,9 @@ class MoreLevelsService extends ScriptableService {
         TweakDBManager.UpdateRecord(t"LootPrereqs.MaxPlayerLevelPrereq");
     }
 
-    public func SetMaxCyberWareCapacity() {
-        let ripperDoc = Reflection.GetClass(n"RipperDocGameController") as RipperDocGameController;
-
-        let max: Float = ripperDoc.GetMaxCapacityPossible();
-        ripperDoc.m_maxCapacityPossible = max;
+    public func SetMaxCyberWareCapacity() -> Void {
+        let event = new UpdateMaxCapacityPossibleEvent();
+        GameInstance.GetUISystem(GetGameInstance()).QueueEvent(event);
 
         let newMax: Float = this.originalMaxCwCap + Cast<Float>((this.maxLevel - 60) * 3);
 
@@ -49,10 +47,14 @@ class MoreLevelsService extends ScriptableService {
         TweakDBManager.UpdateRecord(t"BaseStats.Humanity");
     }
 
-    public func OnModSettingsChange() {
+    public func OnModSettingsChange() -> Void {
         this.SetMaxPlayerLevel();
         this.SetMaxCyberWareCapacity();
     }
+}
+
+public class UpdateMaxCapacityPossibleEvent extends Event {
+
 }
 
 @wrapMethod(RipperDocGameController)
@@ -63,4 +65,11 @@ private final func GetMaxCapacityPossible() -> Float {
     max += Cast<Float>((moreLevelsService.maxLevel - 60) * 3);
 
     return max;
+}
+
+@addMethod(RipperDocGameController)
+protected cb func OnUpdateMaxCapacityPossibleEvent(event: ref<UpdateMaxCapacityPossibleEvent>) -> Bool {
+    this.m_maxCapacityPossible = this.GetMaxCapacityPossible();
+
+    return true;
 }
