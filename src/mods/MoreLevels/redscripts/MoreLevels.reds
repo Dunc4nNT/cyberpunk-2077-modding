@@ -9,6 +9,11 @@ public class MoreLevelsService extends ScriptableService {
     @runtimeProperty("ModSettings.max", "200")
     let maxLevel: Int32 = 79;
 
+    @runtimeProperty("ModSettings.mod", "More Levels")
+    @runtimeProperty("ModSettings.displayName", "Scale Cyberware Capacity")
+    @runtimeProperty("ModSettings.description", "Scales the maximum cyberware capacity with the increased levels, meaning you get three (unless otherwise configured) extra points per level above 60.")
+    let doScaleCyberwareCapacity: Bool = true;
+
     let originalMaxCwCap: Float;
 
     private cb func OnInitialize() -> Void {
@@ -16,8 +21,7 @@ public class MoreLevelsService extends ScriptableService {
 
         ModSettings.RegisterListenerToClass(this);
 		ModSettings.RegisterListenerToModifications(this);
-        this.SetMaxPlayerLevel();
-        this.SetMaxCyberWareCapacity();
+        this.UpdateSettings();
     }
 
     public func SetMaxPlayerLevel() -> Void {
@@ -48,8 +52,15 @@ public class MoreLevelsService extends ScriptableService {
     }
 
     public func OnModSettingsChange() -> Void {
+        this.UpdateSettings();
+    }
+
+    public func UpdateSettings() -> Void {
         this.SetMaxPlayerLevel();
-        this.SetMaxCyberWareCapacity();
+
+        if this.doScaleCyberwareCapacity {
+            this.SetMaxCyberWareCapacity();
+        }
     }
 }
 
@@ -62,7 +73,9 @@ private final func GetMaxCapacityPossible() -> Float {
     let max: Float = wrappedMethod();
     let moreLevelsService: ref<MoreLevelsService> = GameInstance.GetScriptableServiceContainer().GetService(n"NeverToxic.MoreLevels.MoreLevelsService") as MoreLevelsService;
 
-    max += Cast<Float>((moreLevelsService.maxLevel - 60) * 3);
+    if moreLevelsService.doScaleCyberwareCapacity {
+        max += Cast<Float>((moreLevelsService.maxLevel - 60) * 3);
+    }
 
     return max;
 }
