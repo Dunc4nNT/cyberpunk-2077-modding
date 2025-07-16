@@ -16,6 +16,14 @@ public class MoreLevelsService extends ScriptableService {
 
     let originalMaxCwCap: Float;
 
+    public func GetMaxLevel() -> Int32 {
+        return this.maxLevel;
+    }
+
+    public func GetDoScaleCyberwareCapacity() -> Bool {
+        return this.doScaleCyberwareCapacity;
+    }
+
     private cb func OnInitialize() -> Void {
         this.originalMaxCwCap = FromVariant<Float>(TweakDBInterface.GetFlat(t"BaseStats.Humanity.max"));
 
@@ -25,19 +33,19 @@ public class MoreLevelsService extends ScriptableService {
     }
 
     public func SetMaxPlayerLevel() -> Void {
-        TweakDBManager.SetFlat(t"Proficiencies.Level.maxLevel", this.maxLevel);
+        TweakDBManager.SetFlat(t"Proficiencies.Level.maxLevel", this.GetMaxLevel());
         TweakDBManager.UpdateRecord(t"Proficiencies.Level");
 
-        TweakDBManager.SetFlat(t"LootPrereqs.BelowMaxPlayerLevelPrereq.valueToCheck", Cast<Float>(this.maxLevel));
+        TweakDBManager.SetFlat(t"LootPrereqs.BelowMaxPlayerLevelPrereq.valueToCheck", Cast<Float>(this.GetMaxLevel()));
         TweakDBManager.UpdateRecord(t"LootPrereqs.BelowMaxPlayerLevelPrereq");
 
-        TweakDBManager.SetFlat(t"LootPrereqs.CyberpsychoWeaponInLootPrereq_end_inline1.valueToCheck", Cast<Float>(this.maxLevel));
+        TweakDBManager.SetFlat(t"LootPrereqs.CyberpsychoWeaponInLootPrereq_end_inline1.valueToCheck", Cast<Float>(this.GetMaxLevel()));
         TweakDBManager.UpdateRecord(t"LootPrereqs.CyberpsychoWeaponInLootPrereq_end_inline1");
 
-        TweakDBManager.SetFlat(t"LootPrereqs.LegendaryCWLevelAvailabilityAtVendor_inline1.valueToCheck", Cast<Float>(this.maxLevel));
+        TweakDBManager.SetFlat(t"LootPrereqs.LegendaryCWLevelAvailabilityAtVendor_inline1.valueToCheck", Cast<Float>(this.GetMaxLevel()));
         TweakDBManager.UpdateRecord(t"LootPrereqs.LegendaryCWLevelAvailabilityAtVendor_inline1");
 
-        TweakDBManager.SetFlat(t"LootPrereqs.MaxPlayerLevelPrereq.valueToCheck", Cast<Float>(this.maxLevel));
+        TweakDBManager.SetFlat(t"LootPrereqs.MaxPlayerLevelPrereq.valueToCheck", Cast<Float>(this.GetMaxLevel()));
         TweakDBManager.UpdateRecord(t"LootPrereqs.MaxPlayerLevelPrereq");
     }
 
@@ -45,7 +53,7 @@ public class MoreLevelsService extends ScriptableService {
         let event = new UpdateMaxCapacityPossibleEvent();
         GameInstance.GetUISystem(GetGameInstance()).QueueEvent(event);
 
-        let newMax: Float = this.originalMaxCwCap + Cast<Float>((this.maxLevel - 60) * 3);
+        let newMax: Float = this.originalMaxCwCap + Cast<Float>((this.GetMaxLevel() - 60) * 3);
 
         TweakDBManager.SetFlat(t"BaseStats.Humanity.max", newMax);
         TweakDBManager.UpdateRecord(t"BaseStats.Humanity");
@@ -58,7 +66,7 @@ public class MoreLevelsService extends ScriptableService {
     public func UpdateSettings() -> Void {
         this.SetMaxPlayerLevel();
 
-        if this.doScaleCyberwareCapacity {
+        if this.GetDoScaleCyberwareCapacity() {
             this.SetMaxCyberWareCapacity();
         }
     }
@@ -73,8 +81,8 @@ private final func GetMaxCapacityPossible() -> Float {
     let max: Float = wrappedMethod();
     let moreLevelsService: ref<MoreLevelsService> = GameInstance.GetScriptableServiceContainer().GetService(n"NeverToxic.MoreLevels.MoreLevelsService") as MoreLevelsService;
 
-    if moreLevelsService.doScaleCyberwareCapacity {
-        max += Cast<Float>((moreLevelsService.maxLevel - 60) * 3);
+    if moreLevelsService.GetDoScaleCyberwareCapacity() {
+        max += Cast<Float>((moreLevelsService.GetMaxLevel() - 60) * 3);
     }
 
     return max;
