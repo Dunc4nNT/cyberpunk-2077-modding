@@ -1,6 +1,6 @@
 # More Levels
 
-Increase the maximum player level.
+Increase the maximum player level, also scales cyberware capacity.
 
 ## Prerequisites
 

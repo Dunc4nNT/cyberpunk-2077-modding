@@ -9,10 +9,15 @@ class MoreLevelsService extends ScriptableService {
     @runtimeProperty("ModSettings.max", "200")
     let maxLevel: Int32 = 79;
 
+    let originalMaxCwCap: Float;
+
     private cb func OnInitialize() {
+        this.originalMaxCwCap = FromVariant<Float>(TweakDBInterface.GetFlat(t"BaseStats.Humanity.max"));
+
         ModSettings.RegisterListenerToClass(this);
 		ModSettings.RegisterListenerToModifications(this);
         this.SetMaxPlayerLevel();
+        this.SetMaxCyberWareCapacity();
     }
 
     public func SetMaxPlayerLevel() {
@@ -32,7 +37,30 @@ class MoreLevelsService extends ScriptableService {
         TweakDBManager.UpdateRecord(t"LootPrereqs.MaxPlayerLevelPrereq");
     }
 
+    public func SetMaxCyberWareCapacity() {
+        let ripperDoc = Reflection.GetClass(n"RipperDocGameController") as RipperDocGameController;
+
+        let max: Float = ripperDoc.GetMaxCapacityPossible();
+        ripperDoc.m_maxCapacityPossible = max;
+
+        let newMax: Float = this.originalMaxCwCap + Cast<Float>((this.maxLevel - 60) * 3);
+
+        TweakDBManager.SetFlat(t"BaseStats.Humanity.max", newMax);
+        TweakDBManager.UpdateRecord(t"BaseStats.Humanity");
+    }
+
     public func OnModSettingsChange() {
         this.SetMaxPlayerLevel();
+        this.SetMaxCyberWareCapacity();
     }
+}
+
+@wrapMethod(RipperDocGameController)
+private final func GetMaxCapacityPossible() -> Float {
+    let max: Float = wrappedMethod();
+    let moreLevelsService: ref<MoreLevelsService> = GameInstance.GetScriptableServiceContainer().GetService(n"NeverToxic.MoreLevels.MoreLevelsService") as MoreLevelsService;
+
+    max += Cast<Float>((moreLevelsService.maxLevel - 60) * 3);
+
+    return max;
 }
