@@ -91,9 +91,8 @@ public class MoreLevelsService extends ScriptableService {
 
     private cb func OnInitialize() -> Void {
         this.originalMaxCwCap = FromVariant<Float>(TweakDBInterface.GetFlat(t"BaseStats.Humanity.max"));
-
-        ModSettings.RegisterListenerToClass(this);
-		ModSettings.RegisterListenerToModifications(this);
+        
+        RegisterModSettings(this);
         this.UpdateSettings();
     }
 
@@ -191,4 +190,15 @@ private final func OnExperienceAdded(request: ref<AddExperience>) -> Void {
     request.m_amount = Cast<Int32>(newXp);
 
     wrappedMethod(request);
+}
+
+@if(ModuleExists("ModSettingsModule"))
+public func RegisterModSettings(listener: ref<MoreLevelsService>) -> Void {
+    ModSettings.RegisterListenerToClass(listener);
+    ModSettings.RegisterListenerToModifications(listener);
+}
+
+@if(!ModuleExists("ModSettingsModule"))
+public func RegisterModSettings(listener: ref<MoreLevelsService>) -> Void {
+
 }
