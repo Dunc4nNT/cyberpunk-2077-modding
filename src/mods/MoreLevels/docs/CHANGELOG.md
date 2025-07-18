@@ -6,7 +6,7 @@
 
 ### Added
 
-- Add ncreased maximum StreetCred level.
+- Add increased maximum StreetCred level.
 - Add xp curve for levels above 60.
 
 ### Changes
