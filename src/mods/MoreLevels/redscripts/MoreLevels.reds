@@ -21,6 +21,22 @@ public class MoreLevelsService extends ScriptableService {
 
     @runtimeProperty("ModSettings.mod", "More Levels")
     @runtimeProperty("ModSettings.category", "General")
+    @runtimeProperty("ModSettings.displayName", "Player Level XP Curve")
+    @runtimeProperty("ModSettings.description", "Set the XP curve to use for player level. Alternative scales up to level 79, after which it flattens. Vanilla uses the vanilla curve.")
+    @runtimeProperty("ModSettings.displayValues.None", "Vanilla")
+    @runtimeProperty("ModSettings.displayValues.Custom1", "Alternative")
+    let playerLevelXpCurve: CustomLevelCurveType = CustomLevelCurveType.Custom1;
+
+    @runtimeProperty("ModSettings.mod", "More Levels")
+    @runtimeProperty("ModSettings.category", "General")
+    @runtimeProperty("ModSettings.displayName", "StreetCred Level XP Curve")
+    @runtimeProperty("ModSettings.description", "Set the XP curve to use for StreetCred level. Alternative scales up to level 79, after which it flattens. Vanilla uses the vanilla curve.")
+    @runtimeProperty("ModSettings.displayValues.None", "Vanilla")
+    @runtimeProperty("ModSettings.displayValues.Custom1", "Alternative")
+    let streetCredLevelXpCurve: CustomLevelCurveType = CustomLevelCurveType.Custom1;
+
+    @runtimeProperty("ModSettings.mod", "More Levels")
+    @runtimeProperty("ModSettings.category", "General")
     @runtimeProperty("ModSettings.displayName", "Scale Cyberware Capacity")
     @runtimeProperty("ModSettings.description", "Scales the maximum cyberware capacity with the increased levels, meaning you get three (unless otherwise configured) extra points per level above 60.")
     let doScaleCyberwareCapacity: Bool = true;
@@ -102,6 +118,35 @@ public class MoreLevelsService extends ScriptableService {
         return this.doScaleCyberwareCapacity;
     }
 
+    public func GetPlayerLevelXpCurve() -> CustomLevelCurveType {
+        return this.playerLevelXpCurve;
+    }
+
+    public func GetStreetCredLevelXpCurve() -> CustomLevelCurveType {
+        return this.streetCredLevelXpCurve;
+    }
+
+    private cb func OnLoad() {
+        GameInstance
+            .GetCallbackSystem()
+            .RegisterCallback(n"Resource/Ready", this, n"OnCurveReady")
+            .AddTarget(ResourceTarget.Path(r"base\\gameplay\\curves\\statcurves\\statscurvesset.curveresset"));
+    }
+
+    private cb func OnCurveReady(event: ref<ResourceEvent>) {
+        let curveset = event.GetResource() as CurveResourceSet;
+
+        if IsDefined(curveset) {
+            let entry: CurveResourceSetEntry;
+            entry.name = n"morelevels_player_level_up_curve";
+
+            let resRef: ResRef = ResRef.FromName(n"base\\gameplay\\curves\\statcurves\\player\\morelevels_player_level_up_curve.curveset");
+            entry.curveResRef = ResourceRef.FromPath(resRef);
+
+            ArrayPush(curveset.curveResources, entry);
+        }
+    }
+
     private cb func OnInitialize() -> Void {
         this.originalMaxCwCap = FromVariant<Float>(TweakDBInterface.GetFlat(t"BaseStats.Humanity.max"));
         
@@ -144,13 +189,41 @@ public class MoreLevelsService extends ScriptableService {
         TweakDBManager.UpdateRecord(t"BaseStats.Humanity");
     }
 
+    public func SetPlayerLevelCurve() -> Void {
+        switch this.GetPlayerLevelXpCurve() {
+            case CustomLevelCurveType.Custom1:
+                TweakDBManager.SetFlat(t"Proficiencies.Level.curveSetName", n"morelevels_player_level_up_curve");
+                TweakDBManager.UpdateRecord(t"Proficiencies.Level");
+                return;
+            default:
+                TweakDBManager.SetFlat(t"Proficiencies.Level.curveSetName", n"player_level_up_curve");
+                TweakDBManager.UpdateRecord(t"Proficiencies.Level");
+                return;
+        }
+    }
+
+    public func SetStreetCredLevelCurve() -> Void {
+        switch this.GetStreetCredLevelXpCurve() {
+            case CustomLevelCurveType.Custom1:
+                TweakDBManager.SetFlat(t"Proficiencies.StreetCred.curveSetName", n"morelevels_player_level_up_curve");
+                TweakDBManager.UpdateRecord(t"Proficiencies.StreetCred");
+                return;
+            default:
+                TweakDBManager.SetFlat(t"Proficiencies.StreetCred.curveSetName", n"player_level_up_curve");
+                TweakDBManager.UpdateRecord(t"Proficiencies.StreetCred");
+                return;
+        }
+    }
+
     public func OnModSettingsChange() -> Void {
         this.UpdateSettings();
     }
 
     public func UpdateSettings() -> Void {
         this.SetMaxPlayerLevel();
+        this.SetPlayerLevelCurve();
         this.SetMaxStreetCredLevel();
+        this.SetStreetCredLevelCurve();
 
         if this.GetDoScaleCyberwareCapacity() {
             this.SetMaxCyberWareCapacity();
@@ -177,6 +250,11 @@ public class MoreLevelsService extends ScriptableService {
                 return 1.0;
         }
     }
+}
+
+enum CustomLevelCurveType {
+    None = 0,
+    Custom1 = 1,
 }
 
 public class UpdateMaxCapacityPossibleEvent extends Event {
