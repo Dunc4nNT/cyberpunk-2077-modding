@@ -22,7 +22,7 @@ Mandatory and optional requirements for use of this mod.
 
 ## Compatibility
 
-This mod is compatible with Cyberpunk 2077 version 2.21.
+This mod is compatible with Cyberpunk 2077 version 2.3 and 2.21.
 
 ## Configuration
 
