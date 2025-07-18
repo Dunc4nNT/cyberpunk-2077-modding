@@ -1,6 +1,6 @@
 # More Levels
 
-Increase the maximum player level, and alter the rate at which you earn XP. Cyberware capacity can scale with the increased level.
+Increase the maximum player and street cred level, and alter the rate at which you earn XP. Cyberware capacity can scale with the increased level.
 
 ![Player level 79.](./docs/images/increased_level.png)
 
@@ -28,9 +28,15 @@ This mod is compatible with Cyberpunk 2077 version 2.21.
 
 You can configure the max player level in the "Mod Settings" menu. By default this mod sets it to 79, which allows you to max out all attributes. You could also increase it up to 200, allowing you unlock and max out every perk as well. There is a toggle for cyberware capacity scaling, which allows a cyberware capacity past the standard 500 limit, as you gain 3 per level, you can go past 500.
 
+Besides player level, you can also configure a maximum street cred level, up to 200. This doesn't give any extra rewards, it's just "number go up :)".
+
+The game's XP curve stops at level 60, by default this mod extends the curve up to level 79. This can be toggled back to the vanilla curve in the settings menu.
+
 There are also various XP multiplier sliders, for character level, streetcred, and all the various skill types.
 
-![Settings page](./docs/images/settings.png)
+![Settings page (1/2)](./docs/images/settings_0.png)
+
+![Settings page (2/2)](./docs/images/settings_1.png)
 
 ## How to Use
 
