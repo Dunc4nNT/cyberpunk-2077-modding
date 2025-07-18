@@ -2,7 +2,7 @@
 
 Increase the maximum player level, and alter the rate at which you earn XP. Cyberware capacity can scale with the increased level.
 
-![Player level 79.](../../../.github/images/MoreLevels/increased_level.png)
+![Player level 79.](./docs/images/increased_level.png)
 
 ## Prerequisites
 
@@ -30,7 +30,7 @@ You can configure the max player level in the "Mod Settings" menu. By default th
 
 There are also various XP multiplier sliders, for character level, streetcred, and all the various skill types.
 
-![Settings page](../../../.github/images/MoreLevels/settings.png)
+![Settings page](./docs/images/settings.png)
 
 ## How to Use
 
