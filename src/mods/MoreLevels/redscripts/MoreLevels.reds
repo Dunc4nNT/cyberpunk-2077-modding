@@ -12,6 +12,15 @@ public class MoreLevelsService extends ScriptableService {
 
     @runtimeProperty("ModSettings.mod", "More Levels")
     @runtimeProperty("ModSettings.category", "General")
+    @runtimeProperty("ModSettings.displayName", "Maximum StreetCred Level")
+    @runtimeProperty("ModSettings.description", "Set the maximum StreetCred level.")
+    @runtimeProperty("ModSettings.step", "1")
+    @runtimeProperty("ModSettings.min", "50")
+    @runtimeProperty("ModSettings.max", "200")
+    let maxStreetCredLevel: Int32 = 100;
+
+    @runtimeProperty("ModSettings.mod", "More Levels")
+    @runtimeProperty("ModSettings.category", "General")
     @runtimeProperty("ModSettings.displayName", "Scale Cyberware Capacity")
     @runtimeProperty("ModSettings.description", "Scales the maximum cyberware capacity with the increased levels, meaning you get three (unless otherwise configured) extra points per level above 60.")
     let doScaleCyberwareCapacity: Bool = true;
@@ -85,6 +94,10 @@ public class MoreLevelsService extends ScriptableService {
         return this.maxLevel;
     }
 
+    public func GetMaxStreetCredLevel() -> Int32 {
+        return this.maxStreetCredLevel;
+    }
+
     public func GetDoScaleCyberwareCapacity() -> Bool {
         return this.doScaleCyberwareCapacity;
     }
@@ -113,6 +126,14 @@ public class MoreLevelsService extends ScriptableService {
         TweakDBManager.UpdateRecord(t"LootPrereqs.MaxPlayerLevelPrereq");
     }
 
+    public func SetMaxStreetCredLevel() -> Void {
+        TweakDBManager.SetFlat(t"BaseStats.StreetCred.max", this.GetMaxStreetCredLevel());
+        TweakDBManager.UpdateRecord(t"BaseStats.StreetCred");
+
+        TweakDBManager.SetFlat(t"Proficiencies.StreetCred.maxLevel", this.GetMaxStreetCredLevel());
+        TweakDBManager.UpdateRecord(t"Proficiencies.StreetCred");
+    }
+
     public func SetMaxCyberWareCapacity() -> Void {
         let event = new UpdateMaxCapacityPossibleEvent();
         GameInstance.GetUISystem(GetGameInstance()).QueueEvent(event);
@@ -129,6 +150,7 @@ public class MoreLevelsService extends ScriptableService {
 
     public func UpdateSettings() -> Void {
         this.SetMaxPlayerLevel();
+        this.SetMaxStreetCredLevel();
 
         if this.GetDoScaleCyberwareCapacity() {
             this.SetMaxCyberWareCapacity();
