@@ -9,8 +9,8 @@ Increase the maximum player and street cred level, and alter the rate at which y
 Mandatory and optional requirements for use of this mod.
 
 - [Redscript 0.5](https://www.nexusmods.com/cyberpunk2077/mods/1511)
-- [TweakXL 1.10](https://www.nexusmods.com/cyberpunk2077/mods/4197)
-- [Codeware 1.16](https://www.nexusmods.com/cyberpunk2077/mods/7780)
+- [TweakXL 1.11](https://www.nexusmods.com/cyberpunk2077/mods/4197)
+- [Codeware 1.17](https://www.nexusmods.com/cyberpunk2077/mods/7780)
 - [Mod Settings 0.2](https://www.nexusmods.com/cyberpunk2077/mods/4885) (Optional)
 
 ## Installation
