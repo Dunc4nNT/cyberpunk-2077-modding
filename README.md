@@ -12,7 +12,40 @@ Documentation for mods can be found on the [website](https://dunc4nnt.github.io/
 
 ## Mods
 
-<!-- TODO: modlist -->
+[More Levels](https://www.nexusmods.com/cyberpunk2077/mods/22768) - Increase the maximum player and street cred level, and alter the rate at which you earn XP. Cyberware capacity can scale with the increased level.
+
+## Compiling
+
+Continue reading if you want to clone this repository and run it locally. Otherwise skip to the [next section](#contributing).
+
+It is expected you have Cyberpunk 2077 installed, a working [python 3.13](https://www.python.org/downloads/) installation, and dependencies for the individual mod you'd like to install. Individual mods can be found in the `src/mods` directory, where README's can be found as well detailing installation instructions including dependencies.
+
+### Installing and Distributing Mods
+
+To install a mod locally, as well as packing it for release, can use the CLI script `scripts/main.py`. Please change the working directory to `scripts/` before running the script. You must also first edit `config.py.example` to `config.py` and change values as you like.
+
+To install a mod, which copies a mod into your game's directory, you can run the following:
+
+```console
+$ cd scripts/
+$ py main.py install ../src/mods/MoreLevels/
+```
+
+To pack a mod for release:
+
+```console
+$ cd scripts/
+$ py main.py pack ../src/mods/MoreLevels/ 1.2.0
+```
+
+Both `install` and `pack` can take various arguments, refer to the help command for documentation.
+
+```console
+$ cd scripts/
+$ py main.py -h
+$ py main.py install -h
+$ py main.py pack -h
+```
 
 ## Contributing
 

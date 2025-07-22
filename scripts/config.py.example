@@ -1,0 +1,17 @@
+# Path to your game installation.
+CP2077_FOLDER: str = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Cyberpunk 2077"
+
+# Path to put distribution files in.
+DIST_FOLDER: str = "../dist"
+
+# Path to put temporary files in.
+TEMP_FOLDER: str = "../temp"
+
+# Path to license file.
+LICENSE_FILE: str = "../LICENSE"
+
+# Name of the folder where redscript files are. This repo uses "redscripts" as standard.
+REDSCRIPT_FOLDER_NAME: str = "redscripts"
+
+# Name of the folder where wolvenkit files are. This repo uses "wolvenkit" as standard.
+WOLVENKIT_FOLDER_NAME: str = "wolvenkit"
