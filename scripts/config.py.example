@@ -10,8 +10,8 @@ TEMP_FOLDER: str = "../temp"
 # Path to license file.
 LICENSE_FILE: str = "../LICENSE"
 
-# Name of the folder where redscript files are. This repo uses "redscripts" as standard.
-REDSCRIPT_FOLDER_NAME: str = "redscripts"
+# Name of the folder where redscript files are. This repo uses "redscript" as standard.
+REDSCRIPT_FOLDER_NAME: str = "redscript"
 
 # Name of the folder where wolvenkit files are. This repo uses "wolvenkit" as standard.
 WOLVENKIT_FOLDER_NAME: str = "wolvenkit"

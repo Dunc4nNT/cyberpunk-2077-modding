@@ -2,9 +2,19 @@
 
 ## [Unreleased][unreleased]
 
+### Added
+
+- Add more xp curve options.
+
 ### Changed
 
 - Create xp curves using redscript instead of in a .archive file.
+- Use `Character.PlayerCyberwareSystem_inline11.value` instead of hardcoding 3 cyberware per level.
+- Refactor code.
+
+### Fixed
+
+- Fixed - hopefully - users missing alternative xp curve. They're now created differently, and in a different location, so the .archive file is no longer necessary either. 
 
 ## [Version 1.1.0][1.1.0]
 
