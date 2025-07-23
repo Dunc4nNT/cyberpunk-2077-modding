@@ -106,6 +106,10 @@ public class MoreLevelsService extends ScriptableService {
     }
 
     public func SetCyberwareCapacityPerLevel() -> Void {
+        if !this.settings.GetDoUseCustomCyberwareCapacityPerLevel() {
+            return;
+        }
+
         let capPerLevel = this.settings.GetCyberwareCapacityPerLevel();
 
         TweakDBManager.SetFlat(t"Character.PlayerCyberwareSystem_inline11.value", Cast<Float>(capPerLevel));

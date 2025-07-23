@@ -38,17 +38,27 @@ public class MoreLevelsSettings {
     let streetCredLevelXpCurve: CustomLevelCurveType = CustomLevelCurveType.ScaleTo100;
 
     @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
-    @runtimeProperty("ModSettings.displayName", "NeverToxic-MoreLevels-Settings-ScaleCwCap-Name")
-    @runtimeProperty("ModSettings.description", "NeverToxic-MoreLevels-Settings-ScaleCwCap-Description")
+    @runtimeProperty("ModSettings.category", "NeverToxic-MoreLevels-Settings-Cyberware-CategoryName")
+    @runtimeProperty("ModSettings.displayName", "NeverToxic-MoreLevels-Settings-Cyberware-ScaleCwCap-Name")
+    @runtimeProperty("ModSettings.description", "NeverToxic-MoreLevels-Settings-Cyberware-ScaleCwCap-Description")
     let doScaleCyberwareCapacity: Bool = true;
 
     @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
-    @runtimeProperty("ModSettings.displayName", "NeverToxic-MoreLevels-Settings-CwCapPerLevel-Name")
-    @runtimeProperty("ModSettings.description", "NeverToxic-MoreLevels-Settings-CwCapPerLevel-Description")
+    @runtimeProperty("ModSettings.category", "NeverToxic-MoreLevels-Settings-Cyberware-CategoryName")
+    @runtimeProperty("ModSettings.displayName", "NeverToxic-MoreLevels-Settings-Cyberware-UseCustomCwCapPerLevel-Name")
+    @runtimeProperty("ModSettings.description", "NeverToxic-MoreLevels-Settings-Cyberware-UseCustomCwCapPerLevel-Description")
+    @runtimeProperty("ModSettings.updatePolicy", "RestartRequired")
+    let doUseCustomCyberwareCapacityPerLevel: Bool = true;
+
+    @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
+    @runtimeProperty("ModSettings.category", "NeverToxic-MoreLevels-Settings-Cyberware-CategoryName")
+    @runtimeProperty("ModSettings.displayName", "NeverToxic-MoreLevels-Settings-Cyberware-CwCapPerLevel-Name")
+    @runtimeProperty("ModSettings.description", "NeverToxic-MoreLevels-Settings-Cyberware-CwCapPerLevel-Description")
     @runtimeProperty("ModSettings.step", "1")
     @runtimeProperty("ModSettings.min", "0")
     @runtimeProperty("ModSettings.max", "25")
     @runtimeProperty("ModSettings.updatePolicy", "LoadLastCheckpointRequired")
+    @runtimeProperty("ModSettings.dependency", "doUseCustomCyberwareCapacityPerLevel")
     let cyberwareCapacityPerLevel: Int32 = 3;
 
     @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
@@ -145,6 +155,10 @@ public class MoreLevelsSettings {
 
     public func GetDoScaleCyberwareCapacity() -> Bool {
         return this.doScaleCyberwareCapacity;
+    }
+
+    public func GetDoUseCustomCyberwareCapacityPerLevel() -> Bool {
+        return this.doUseCustomCyberwareCapacityPerLevel;
     }
 
     public func GetCyberwareCapacityPerLevel() -> Int32 {
