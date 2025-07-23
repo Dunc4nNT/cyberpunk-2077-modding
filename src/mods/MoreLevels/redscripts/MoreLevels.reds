@@ -22,18 +22,24 @@ public class MoreLevelsService extends ScriptableService {
     @runtimeProperty("ModSettings.mod", "More Levels")
     @runtimeProperty("ModSettings.category", "General")
     @runtimeProperty("ModSettings.displayName", "Player Level XP Curve")
-    @runtimeProperty("ModSettings.description", "Set the XP curve to use for player level. Alternative scales up to level 79, after which it flattens. Vanilla uses the vanilla curve.")
+    @runtimeProperty("ModSettings.description", "Set the XP curve to use for player level. Vanilla uses the vanilla curve. Scale to [num] use vanilla curve, but extend it up to [num].")
     @runtimeProperty("ModSettings.displayValues.None", "Vanilla")
-    @runtimeProperty("ModSettings.displayValues.Custom1", "Alternative")
-    let playerLevelXpCurve: CustomLevelCurveType = CustomLevelCurveType.Custom1;
+    @runtimeProperty("ModSettings.displayValues.ScaleTo79", "Scale to 79")
+    @runtimeProperty("ModSettings.displayValues.ScaleTo80", "Scale to 80")
+    @runtimeProperty("ModSettings.displayValues.ScaleTo100", "Scale to 100")
+    @runtimeProperty("ModSettings.displayValues.ScaleTo200", "Scale to 200")
+    let playerLevelXpCurve: CustomLevelCurveType = CustomLevelCurveType.ScaleTo79;
 
     @runtimeProperty("ModSettings.mod", "More Levels")
     @runtimeProperty("ModSettings.category", "General")
     @runtimeProperty("ModSettings.displayName", "StreetCred Level XP Curve")
-    @runtimeProperty("ModSettings.description", "Set the XP curve to use for StreetCred level. Alternative scales up to level 79, after which it flattens. Vanilla uses the vanilla curve.")
+    @runtimeProperty("ModSettings.description", "Set the XP curve to use for StreetCred level. Vanilla uses the vanilla curve. Scale to [num] use vanilla curve, but extend it up to [num].")
     @runtimeProperty("ModSettings.displayValues.None", "Vanilla")
-    @runtimeProperty("ModSettings.displayValues.Custom1", "Alternative")
-    let streetCredLevelXpCurve: CustomLevelCurveType = CustomLevelCurveType.Custom1;
+    @runtimeProperty("ModSettings.displayValues.ScaleTo79", "Scale to 79")
+    @runtimeProperty("ModSettings.displayValues.ScaleTo80", "Scale to 80")
+    @runtimeProperty("ModSettings.displayValues.ScaleTo100", "Scale to 100")
+    @runtimeProperty("ModSettings.displayValues.ScaleTo200", "Scale to 200")
+    let streetCredLevelXpCurve: CustomLevelCurveType = CustomLevelCurveType.ScaleTo79;
 
     @runtimeProperty("ModSettings.mod", "More Levels")
     @runtimeProperty("ModSettings.category", "General")
@@ -130,20 +136,17 @@ public class MoreLevelsService extends ScriptableService {
         GameInstance
             .GetCallbackSystem()
             .RegisterCallback(n"Resource/Ready", this, n"OnCurveReady")
-            .AddTarget(ResourceTarget.Path(r"base\\gameplay\\curves\\statcurves\\statscurvesset.curveresset"));
+            .AddTarget(ResourceTarget.Path(r"base\\gameplay\\curves\\statcurves\\player\\player_level_up_curve.curveset"));
     }
 
     private cb func OnCurveReady(event: ref<ResourceEvent>) {
-        let curveset = event.GetResource() as CurveResourceSet;
+        let curveset = event.GetResource() as CurveSet;
 
         if IsDefined(curveset) {
-            let entry: CurveResourceSetEntry;
-            entry.name = n"morelevels_player_level_up_curve";
-
-            let resRef: ResRef = ResRef.FromName(n"base\\gameplay\\curves\\statcurves\\player\\morelevels_player_level_up_curve.curveset");
-            entry.curveResRef = ResourceRef.FromPath(resRef);
-
-            ArrayPush(curveset.curveResources, entry);
+            ArrayPush(curveset.curves, this.CreateLevelCurveStandardScaled(79, n"nevertoxic_morelevels_xp_per_level_standard_79"));
+            ArrayPush(curveset.curves, this.CreateLevelCurveStandardScaled(80, n"nevertoxic_morelevels_xp_per_level_standard_80"));
+            ArrayPush(curveset.curves, this.CreateLevelCurveStandardScaled(100, n"nevertoxic_morelevels_xp_per_level_standard_100"));
+            ArrayPush(curveset.curves, this.CreateLevelCurveStandardScaled(200, n"nevertoxic_morelevels_xp_per_level_standard_200"));
         }
     }
 
@@ -152,6 +155,36 @@ public class MoreLevelsService extends ScriptableService {
         
         RegisterModSettings(this);
         this.UpdateSettings();
+    }
+
+    private func CreateLevelCurveStandardScaled(limit: Int32, name: CName) -> CurveSetEntry {
+        let entry: CurveSetEntry;
+        entry.name = name;
+
+        CurveDataFloat.SetSize(entry.curve, Cast<Uint32>(limit));
+
+        let i: Int32 = 0;
+        while i < limit {
+            let idx: Uint32 = Cast<Uint32>(i);
+            CurveDataFloat.SetPointValue(entry.curve, idx, Cast<Float>(i + 1), this.GetLevelCurveValueAt(i + 1));
+
+            i += 1;
+        }
+
+        return entry;
+    }
+
+    // Formula for vanilla level curve.
+    // Might be off by 1 xp due to rounding error.
+    private func GetLevelCurveValueAt(num: Int32) -> Float {
+        if num == 1 {
+            return 0.0;
+        }
+
+        let euler: Float = 2.718281828459045;
+        let result: Float = (2.90699 * PowF(10, 9)) / (1.0 + PowF(euler, -(0.0399177 * Cast<Float>(num) - 14.96278)));
+
+        return Cast<Float>(RoundF(result));
     }
 
     public func SetMaxPlayerLevel() -> Void {
@@ -191,12 +224,24 @@ public class MoreLevelsService extends ScriptableService {
 
     public func SetPlayerLevelCurve() -> Void {
         switch this.GetPlayerLevelXpCurve() {
-            case CustomLevelCurveType.Custom1:
-                TweakDBManager.SetFlat(t"Proficiencies.Level.curveSetName", n"morelevels_player_level_up_curve");
+            case CustomLevelCurveType.ScaleTo79:
+                TweakDBManager.SetFlat(t"Proficiencies.Level.curveName", n"nevertoxic_morelevels_xp_per_level_standard_79");
+                TweakDBManager.UpdateRecord(t"Proficiencies.Level");
+                return;
+            case CustomLevelCurveType.ScaleTo80:
+                TweakDBManager.SetFlat(t"Proficiencies.Level.curveName", n"nevertoxic_morelevels_xp_per_level_standard_80");
+                TweakDBManager.UpdateRecord(t"Proficiencies.Level");
+                return;
+            case CustomLevelCurveType.ScaleTo100:
+                TweakDBManager.SetFlat(t"Proficiencies.Level.curveName", n"nevertoxic_morelevels_xp_per_level_standard_100");
+                TweakDBManager.UpdateRecord(t"Proficiencies.Level");
+                return;
+            case CustomLevelCurveType.ScaleTo200:
+                TweakDBManager.SetFlat(t"Proficiencies.Level.curveName", n"nevertoxic_morelevels_xp_per_level_standard_200");
                 TweakDBManager.UpdateRecord(t"Proficiencies.Level");
                 return;
             default:
-                TweakDBManager.SetFlat(t"Proficiencies.Level.curveSetName", n"player_level_up_curve");
+                TweakDBManager.SetFlat(t"Proficiencies.Level.curveName", n"player_primary_level_to_xp");
                 TweakDBManager.UpdateRecord(t"Proficiencies.Level");
                 return;
         }
@@ -204,12 +249,24 @@ public class MoreLevelsService extends ScriptableService {
 
     public func SetStreetCredLevelCurve() -> Void {
         switch this.GetStreetCredLevelXpCurve() {
-            case CustomLevelCurveType.Custom1:
-                TweakDBManager.SetFlat(t"Proficiencies.StreetCred.curveSetName", n"morelevels_player_level_up_curve");
+            case CustomLevelCurveType.ScaleTo79:
+                TweakDBManager.SetFlat(t"Proficiencies.StreetCred.curveName", n"nevertoxic_morelevels_xp_per_level_standard_79");
+                TweakDBManager.UpdateRecord(t"Proficiencies.StreetCred");
+                return;
+            case CustomLevelCurveType.ScaleTo80:
+                TweakDBManager.SetFlat(t"Proficiencies.StreetCred.curveName", n"nevertoxic_morelevels_xp_per_level_standard_80");
+                TweakDBManager.UpdateRecord(t"Proficiencies.StreetCred");
+                return;
+            case CustomLevelCurveType.ScaleTo100:
+                TweakDBManager.SetFlat(t"Proficiencies.StreetCred.curveName", n"nevertoxic_morelevels_xp_per_level_standard_100");
+                TweakDBManager.UpdateRecord(t"Proficiencies.StreetCred");
+                return;
+            case CustomLevelCurveType.ScaleTo200:
+                TweakDBManager.SetFlat(t"Proficiencies.StreetCred.curveName", n"nevertoxic_morelevels_xp_per_level_standard_200");
                 TweakDBManager.UpdateRecord(t"Proficiencies.StreetCred");
                 return;
             default:
-                TweakDBManager.SetFlat(t"Proficiencies.StreetCred.curveSetName", n"player_level_up_curve");
+                TweakDBManager.SetFlat(t"Proficiencies.StreetCred.curveName", n"player_primary_level_to_xp");
                 TweakDBManager.UpdateRecord(t"Proficiencies.StreetCred");
                 return;
         }
@@ -254,7 +311,10 @@ public class MoreLevelsService extends ScriptableService {
 
 enum CustomLevelCurveType {
     None = 0,
-    Custom1 = 1,
+    ScaleTo79 = 1,
+    ScaleTo80 = 2,
+    ScaleTo100 = 3,
+    ScaleTo200 = 4,
 }
 
 public class UpdateMaxCapacityPossibleEvent extends Event {

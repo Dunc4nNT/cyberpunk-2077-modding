@@ -2,6 +2,10 @@
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+- Create xp curves using redscript instead of in a .archive file.
+
 ## [Version 1.1.0][1.1.0]
 
 ### Added
@@ -9,7 +13,7 @@
 - Add increased maximum StreetCred level.
 - Add xp curve for levels above 60.
 
-### Changes
+### Changed
 
 - Mod Settings is now an optional dependency.
 
