@@ -35,7 +35,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.displayValues.ScaleTo80", "Scale to 80")
     @runtimeProperty("ModSettings.displayValues.ScaleTo100", "Scale to 100")
     @runtimeProperty("ModSettings.displayValues.ScaleTo200", "Scale to 200")
-    let streetCredLevelXpCurve: CustomLevelCurveType = CustomLevelCurveType.ScaleTo79;
+    let streetCredLevelXpCurve: CustomLevelCurveType = CustomLevelCurveType.ScaleTo100;
 
     @runtimeProperty("ModSettings.mod", "More Levels")
     @runtimeProperty("ModSettings.displayName", "Scale Cyberware Capacity")
