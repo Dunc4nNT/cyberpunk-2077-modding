@@ -2,6 +2,10 @@
 
 ## [Unreleased][unreleased]
 
+### Added
+
+- Add clear error messages for missing dependencies.
+
 ### Changed
 
 - Moved hardcoded UI values to translatable .archive file using wolvenkit and archivexl.

@@ -1,0 +1,19 @@
+[[UNRESOLVED_TYPE]]
+id = "MISSING_CODEWARE"
+line_contains = "extends ScriptableService"
+message = "A mod depends on Codeware which is not, or incorrectly installed, please (re)install it."
+
+[[UNRESOLVED_METHOD]]
+id = "MISSING_TWEAKXL"
+line_contains = "TweakDBInterface.GetFlat"
+message = "A mod depends on TweakXL which is not, or incorrectly installed, please (re)install it."
+
+[[UNRESOLVED_REF]]
+id = "MISSING_TWEAKXL"
+line_contains = "TweakDBManager"
+message = "A mod depends on TweakXL which is not, or incorrectly installed, please (re)install it."
+
+[[UNRESOLVED_METHOD]]
+id = "MISSING_CODEWARE"
+line_contains = "GameInstance.GetScriptableServiceContainer"
+message = "A mod depends on Codeware which is not, or incorrectly installed, please (re)install it."

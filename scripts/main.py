@@ -40,6 +40,17 @@ def _copy_mod_files(
         for archivexl_file in archivexl_path.glob("**/*.archive.xl"):
             shutil.copy(archivexl_file, archivexl_out_path)
 
+    # TODO: change all these paths to easily configurable settings in the CLI
+    shared_path: Path = Path("../src/shared")
+    shared_reds_user_hints_path: Path = shared_path / "redsUserHints"
+
+    if shared_reds_user_hints_path.exists():
+        reds_user_hints_out_path: Path = Path(out_dir / "r6/config/redsUserHints")
+        reds_user_hints_out_path.mkdir(parents=True, exist_ok=True)
+
+        for reds_user_hints_file in shared_reds_user_hints_path.glob("**/*.toml"):
+            shutil.copy(reds_user_hints_file, reds_user_hints_out_path)
+
 
 def install_mods(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
     mod_path: Path = Path(args.mod_directory)
