@@ -48,3 +48,7 @@ Once you open the game for the first time, click on "Mod Settings" in the main m
 For nearly all scenarios you're fine to edit settings while playing, but there is one case which may require you to restart your game for it to update. If you update cyberware capacity or cyberware capacity per level, you might need to reload your save or restart your game for the change to take effect. This is really a non-issue as you likely naturally restart multiple times before passing the cap, but it is something to keep in mind.
 
 If you know how to fix this so it no longer requires a restart, please let me know (or create a PR on the [repo](https://github.com/Dunc4nNT/cyberpunk-2077-modding)) and I'll fix it in a future update!
+
+## Translations
+
+Although I only provide English localisation with the mod, and I do not accept translations into my mod releases, you're free to distribute your own. On the modding wiki you can find an [extensive guide to translating mods](https://wiki.redmodding.org/cyberpunk-2077-modding/modding-guides/everything-else/how-to-translate-a-mod). You can get the localisation file from `archive\pc\mod\MoreLevels.archive`. Once you have your distribution files (a `.archive` and `.archive.xl` file), you can create a translation mod on NexusMods and link MoreLevels as the mod you've translated.
