@@ -21,10 +21,12 @@ protected cb func OnUpdateMaxCapacityPossibleEvent(event: ref<UpdateMaxCapacityP
 private final func OnExperienceAdded(request: ref<AddExperience>) -> Void {
     let moreLevelsService: ref<MoreLevelsService> = GameInstance.GetScriptableServiceContainer().GetService(n"NeverToxic.MoreLevels.MoreLevelsService") as MoreLevelsService;
 
-    let xpFloat: Float = Cast<Float>(request.m_amount);
-    let newXp: Float = xpFloat * moreLevelsService.GetXpMultiplier(request.m_experienceType);
+    if (moreLevelsService.settings.GetDoEnableXpMultipliers()) {
+        let xpFloat: Float = Cast<Float>(request.m_amount);
+        let newXp: Float = xpFloat * moreLevelsService.GetXpMultiplier(request.m_experienceType);
 
-    request.m_amount = Cast<Int32>(newXp);
+        request.m_amount = Cast<Int32>(newXp);
+    }
 
     wrappedMethod(request);
 }

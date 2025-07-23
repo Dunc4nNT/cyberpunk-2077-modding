@@ -53,11 +53,18 @@ public class MoreLevelsSettings {
 
     @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
     @runtimeProperty("ModSettings.category", "NeverToxic-MoreLevels-Settings-XpMultipliers-CategoryName")
+    @runtimeProperty("ModSettings.displayName", "NeverToxic-MoreLevels-Settings-XpMultipliers-Toggle-Name")
+    @runtimeProperty("ModSettings.description", "NeverToxic-MoreLevels-Settings-XpMultipliers-Toggle-Description")
+    let doEnableXpMultipliers: Bool = true;
+
+    @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
+    @runtimeProperty("ModSettings.category", "NeverToxic-MoreLevels-Settings-XpMultipliers-CategoryName")
     @runtimeProperty("ModSettings.displayName", "NeverToxic-MoreLevels-Settings-XpMultipliers-CharacterLevel-Name")
     @runtimeProperty("ModSettings.description", "NeverToxic-MoreLevels-Settings-XpMultipliers-CharacterLevel-Description")
     @runtimeProperty("ModSettings.step", "0.05")
     @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
+    @runtimeProperty("ModSettings.dependency", "doEnableXpMultipliers")
     let levelXpMultiplier: Float = 1.0;
 
     @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
@@ -67,6 +74,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.step", "0.05")
     @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
+    @runtimeProperty("ModSettings.dependency", "doEnableXpMultipliers")
     let streetCredXpMultiplier: Float = 1.0;
 
     @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
@@ -76,6 +84,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.step", "0.05")
     @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
+    @runtimeProperty("ModSettings.dependency", "doEnableXpMultipliers")
     let headhunterXpMultiplier: Float = 1.0;
 
     @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
@@ -85,6 +94,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.step", "0.05")
     @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
+    @runtimeProperty("ModSettings.dependency", "doEnableXpMultipliers")
     let netrunnerXpMultiplier: Float = 1.0;
 
     @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
@@ -94,6 +104,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.step", "0.05")
     @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
+    @runtimeProperty("ModSettings.dependency", "doEnableXpMultipliers")
     let shinobiXpMultiplier: Float = 1.0;
 
     @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
@@ -103,6 +114,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.step", "0.05")
     @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
+    @runtimeProperty("ModSettings.dependency", "doEnableXpMultipliers")
     let soloXpMultiplier: Float = 1.0;
 
     @runtimeProperty("ModSettings.mod", "NeverToxic-MoreLevels-ModName")
@@ -112,6 +124,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.step", "0.05")
     @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
+    @runtimeProperty("ModSettings.dependency", "doEnableXpMultipliers")
     let engineerXpMultiplier: Float = 1.0;
 
     public func GetMaxLevel() -> Int32 {
@@ -136,6 +149,10 @@ public class MoreLevelsSettings {
 
     public func GetCyberwareCapacityPerLevel() -> Int32 {
         return this.cyberwareCapacityPerLevel;
+    }
+
+    public func GetDoEnableXpMultipliers() -> Bool {
+        return this.doEnableXpMultipliers;
     }
 
     public func GetLevelXpMultiplier() -> Float {

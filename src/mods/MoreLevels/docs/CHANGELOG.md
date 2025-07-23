@@ -5,6 +5,7 @@
 ### Added
 
 - Add clear error messages for missing dependencies.
+- Add toggle for XP multipliers so it's easy to change between saves, while remembering the previously set values.
 
 ### Changed
 
