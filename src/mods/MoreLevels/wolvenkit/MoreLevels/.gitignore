@@ -1,3 +1,5 @@
 *.zip
 raw
 packed
+layout.xml
+custom_refs.txt
