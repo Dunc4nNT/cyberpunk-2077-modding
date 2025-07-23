@@ -56,7 +56,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.displayName", "Character Level")
     @runtimeProperty("ModSettings.description", "Set the amount character XP should be multiplied by.")
     @runtimeProperty("ModSettings.step", "0.05")
-    @runtimeProperty("ModSettings.min", "0.5")
+    @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
     let levelXpMultiplier: Float = 1.0;
 
@@ -65,7 +65,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.displayName", "StreedCred Level")
     @runtimeProperty("ModSettings.description", "Set the amount streetcred XP should be multiplied by.")
     @runtimeProperty("ModSettings.step", "0.05")
-    @runtimeProperty("ModSettings.min", "0.5")
+    @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
     let streetCredXpMultiplier: Float = 1.0;
 
@@ -74,7 +74,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.displayName", "Headhunter")
     @runtimeProperty("ModSettings.description", "Set the amount headhunter XP should be multiplied by.")
     @runtimeProperty("ModSettings.step", "0.05")
-    @runtimeProperty("ModSettings.min", "0.5")
+    @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
     let headhunterXpMultiplier: Float = 1.0;
 
@@ -83,7 +83,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.displayName", "Netrunner")
     @runtimeProperty("ModSettings.description", "Set the amount netrunner XP should be multiplied by.")
     @runtimeProperty("ModSettings.step", "0.05")
-    @runtimeProperty("ModSettings.min", "0.5")
+    @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
     let netrunnerXpMultiplier: Float = 1.0;
 
@@ -92,7 +92,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.displayName", "Shinobi")
     @runtimeProperty("ModSettings.description", "Set the amount shinobi XP should be multiplied by.")
     @runtimeProperty("ModSettings.step", "0.05")
-    @runtimeProperty("ModSettings.min", "0.5")
+    @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
     let shinobiXpMultiplier: Float = 1.0;
 
@@ -101,7 +101,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.displayName", "Solo")
     @runtimeProperty("ModSettings.description", "Set the amount solo XP should be multiplied by.")
     @runtimeProperty("ModSettings.step", "0.05")
-    @runtimeProperty("ModSettings.min", "0.5")
+    @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
     let soloXpMultiplier: Float = 1.0;
 
@@ -110,7 +110,7 @@ public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.displayName", "Engineer")
     @runtimeProperty("ModSettings.description", "Set the amount engineer XP should be multiplied by.")
     @runtimeProperty("ModSettings.step", "0.05")
-    @runtimeProperty("ModSettings.min", "0.5")
+    @runtimeProperty("ModSettings.min", "0.05")
     @runtimeProperty("ModSettings.max", "5.0")
     let engineerXpMultiplier: Float = 1.0;
 
