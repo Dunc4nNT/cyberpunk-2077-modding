@@ -31,6 +31,7 @@ public class MoreLevelsService extends ScriptableService {
         this.SetPlayerLevelCurve();
         this.SetMaxStreetCredLevel();
         this.SetStreetCredLevelCurve();
+        this.SetCyberwareCapacityPerLevel();
         this.SetMaxCyberwareCapacity();
     }
 
@@ -102,6 +103,13 @@ public class MoreLevelsService extends ScriptableService {
 
         TweakDBManager.SetFlat(t"Proficiencies.StreetCred.maxLevel", maxLevel);
         TweakDBManager.UpdateRecord(t"Proficiencies.StreetCred");
+    }
+
+    public func SetCyberwareCapacityPerLevel() -> Void {
+        let capPerLevel = this.settings.GetCyberwareCapacityPerLevel();
+
+        TweakDBManager.SetFlat(t"Character.PlayerCyberwareSystem_inline11.value", Cast<Float>(capPerLevel));
+        TweakDBManager.UpdateRecord(t"Character.PlayerCyberwareSystem_inline11");
     }
 
     public func SetMaxCyberwareCapacity() -> Void {

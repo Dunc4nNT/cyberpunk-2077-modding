@@ -2,7 +2,6 @@ module NeverToxic.MoreLevels
 
 public class MoreLevelsSettings {
     @runtimeProperty("ModSettings.mod", "More Levels")
-    @runtimeProperty("ModSettings.category", "General")
     @runtimeProperty("ModSettings.displayName", "Maximum Player Level")
     @runtimeProperty("ModSettings.description", "Set the maximum player level.")
     @runtimeProperty("ModSettings.step", "1")
@@ -11,7 +10,6 @@ public class MoreLevelsSettings {
     let maxLevel: Int32 = 79;
 
     @runtimeProperty("ModSettings.mod", "More Levels")
-    @runtimeProperty("ModSettings.category", "General")
     @runtimeProperty("ModSettings.displayName", "Maximum StreetCred Level")
     @runtimeProperty("ModSettings.description", "Set the maximum StreetCred level.")
     @runtimeProperty("ModSettings.step", "1")
@@ -20,7 +18,6 @@ public class MoreLevelsSettings {
     let maxStreetCredLevel: Int32 = 100;
 
     @runtimeProperty("ModSettings.mod", "More Levels")
-    @runtimeProperty("ModSettings.category", "General")
     @runtimeProperty("ModSettings.displayName", "Player Level XP Curve")
     @runtimeProperty("ModSettings.description", "Set the XP curve to use for player level. Vanilla uses the vanilla curve. Scale to [num] use vanilla curve, but extend it up to [num].")
     @runtimeProperty("ModSettings.displayValues.None", "Vanilla")
@@ -31,7 +28,6 @@ public class MoreLevelsSettings {
     let playerLevelXpCurve: CustomLevelCurveType = CustomLevelCurveType.ScaleTo79;
 
     @runtimeProperty("ModSettings.mod", "More Levels")
-    @runtimeProperty("ModSettings.category", "General")
     @runtimeProperty("ModSettings.displayName", "StreetCred Level XP Curve")
     @runtimeProperty("ModSettings.description", "Set the XP curve to use for StreetCred level. Vanilla uses the vanilla curve. Scale to [num] use vanilla curve, but extend it up to [num].")
     @runtimeProperty("ModSettings.displayValues.None", "Vanilla")
@@ -42,10 +38,18 @@ public class MoreLevelsSettings {
     let streetCredLevelXpCurve: CustomLevelCurveType = CustomLevelCurveType.ScaleTo79;
 
     @runtimeProperty("ModSettings.mod", "More Levels")
-    @runtimeProperty("ModSettings.category", "General")
     @runtimeProperty("ModSettings.displayName", "Scale Cyberware Capacity")
     @runtimeProperty("ModSettings.description", "Scales the maximum cyberware capacity with the increased levels, meaning you get three (unless otherwise configured) extra points per level above 60.")
     let doScaleCyberwareCapacity: Bool = true;
+
+    @runtimeProperty("ModSettings.mod", "More Levels")
+    @runtimeProperty("ModSettings.displayName", "Cyberware Capacity per Level")
+    @runtimeProperty("ModSettings.description", "Amount that cyberware capacity increases per level.")
+    @runtimeProperty("ModSettings.step", "1")
+    @runtimeProperty("ModSettings.min", "0")
+    @runtimeProperty("ModSettings.max", "25")
+    @runtimeProperty("ModSettings.updatePolicy", "LoadLastCheckpointRequired")
+    let cyberwareCapacityPerLevel: Int32 = 3;
 
     @runtimeProperty("ModSettings.mod", "More Levels")
     @runtimeProperty("ModSettings.category", "XP Multipliers")
@@ -128,6 +132,10 @@ public class MoreLevelsSettings {
 
     public func GetDoScaleCyberwareCapacity() -> Bool {
         return this.doScaleCyberwareCapacity;
+    }
+
+    public func GetCyberwareCapacityPerLevel() -> Int32 {
+        return this.cyberwareCapacityPerLevel;
     }
 
     public func GetLevelXpMultiplier() -> Float {

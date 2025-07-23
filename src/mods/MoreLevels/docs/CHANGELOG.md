@@ -5,6 +5,7 @@
 ### Added
 
 - Add more xp curve options.
+- Add option to increase cyberware capacity per level.
 
 ### Changed
 
