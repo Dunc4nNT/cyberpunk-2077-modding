@@ -15,3 +15,6 @@ REDSCRIPT_FOLDER_NAME: str = "redscript"
 
 # Name of the folder where wolvenkit files are. This repo uses "wolvenkit" as standard.
 WOLVENKIT_FOLDER_NAME: str = "wolvenkit"
+
+# Name of the folder where archivexl files are. This repo uses "archivexl" as standard.
+ARCHIVEXL_FOLDER_NAME: str = "archivexl"

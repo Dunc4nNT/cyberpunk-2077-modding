@@ -2,6 +2,10 @@
 
 ## [Unreleased][unreleased]
 
+### Changed
+
+- Moved hardcoded UI values to translatable .archive file using wolvenkit and archivexl.
+
 ## [Version 1.2.0][1.2.0]
 
 ### Added

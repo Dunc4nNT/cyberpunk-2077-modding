@@ -11,6 +11,7 @@ Mandatory and optional requirements for use of this mod.
 - [Redscript 0.5](https://www.nexusmods.com/cyberpunk2077/mods/1511)
 - [TweakXL 1.11](https://www.nexusmods.com/cyberpunk2077/mods/4197)
 - [Codeware 1.17](https://www.nexusmods.com/cyberpunk2077/mods/7780)
+- [ArchiveXL 1.24](https://www.nexusmods.com/cyberpunk2077/mods/4198)
 - [Mod Settings 0.2](https://www.nexusmods.com/cyberpunk2077/mods/4885) (Optional)
 
 ## Installation

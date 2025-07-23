@@ -2,26 +2,43 @@ import argparse
 import shutil
 from pathlib import Path
 
-from config import CP2077_FOLDER, DIST_FOLDER, LICENSE_FILE, REDSCRIPT_FOLDER_NAME, TEMP_FOLDER, WOLVENKIT_FOLDER_NAME
+from config import (
+    ARCHIVEXL_FOLDER_NAME,
+    CP2077_FOLDER,
+    DIST_FOLDER,
+    LICENSE_FILE,
+    REDSCRIPT_FOLDER_NAME,
+    TEMP_FOLDER,
+    WOLVENKIT_FOLDER_NAME,
+)
 
 
-def _copy_mod_files(mod_name: str, reds_path: Path, wkit_path: Path, license_file: Path, out_dir: Path) -> None:
+def _copy_mod_files(
+    mod_name: str, reds_path: Path, wkit_path: Path, archivexl_path: Path, license_file: Path, out_dir: Path
+) -> None:
     if reds_path.exists():
         reds_out_path: Path = Path(out_dir / "r6/scripts" / mod_name)
         reds_out_path.mkdir(parents=True, exist_ok=True)
 
-        for reds_file in reds_path.glob("*.reds"):
-            shutil.copy(reds_file, reds_out_path)
+        shutil.copytree(reds_path, reds_out_path, dirs_exist_ok=True)
 
         if license_file.exists():
             shutil.copy(license_file, reds_out_path)
 
+    wkit_path /= f"{mod_name}/packed"
     if wkit_path.exists():
         wkit_out_path: Path = Path(out_dir / "archive/pc/mod")
         wkit_out_path.mkdir(parents=True, exist_ok=True)
 
-        for wkit_file in wkit_path.glob("*.archive"):
+        for wkit_file in wkit_path.glob("**/*.archive*"):
             shutil.copy(wkit_file, wkit_out_path)
+
+    if archivexl_path.exists():
+        archivexl_out_path: Path = Path(out_dir / "archive/pc/mod")
+        archivexl_out_path.mkdir(parents=True, exist_ok=True)
+
+        for archivexl_file in archivexl_path.glob("**/*.archive.xl"):
+            shutil.copy(archivexl_file, archivexl_out_path)
 
 
 def install_mods(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
@@ -30,10 +47,16 @@ def install_mods(parser: argparse.ArgumentParser, args: argparse.Namespace) -> N
     mod_name: str = args.mod_name or mod_path.name
     reds_path: Path = mod_path / Path(args.redscript_folder_name or REDSCRIPT_FOLDER_NAME)
     wkit_path: Path = mod_path / Path(args.wolvenkit_folder_name or WOLVENKIT_FOLDER_NAME)
+    archivexl_path: Path = mod_path / Path(args.archivexl_folder_name or ARCHIVEXL_FOLDER_NAME)
     license_file: Path = Path(args.license_file or LICENSE_FILE)
 
     _copy_mod_files(
-        mod_name=mod_name, reds_path=reds_path, wkit_path=wkit_path, license_file=license_file, out_dir=game_path
+        mod_name=mod_name,
+        reds_path=reds_path,
+        wkit_path=wkit_path,
+        archivexl_path=archivexl_path,
+        license_file=license_file,
+        out_dir=game_path,
     )
 
     print(f"Successfully installed {mod_name} into {game_path.resolve()}.")
@@ -47,12 +70,18 @@ def pack_mods(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None
     dist_path: Path = Path(args.destination) / mod_name
     reds_path: Path = mod_path / Path(args.redscript_folder_name or REDSCRIPT_FOLDER_NAME)
     wkit_path: Path = mod_path / Path(args.wolvenkit_folder_name or WOLVENKIT_FOLDER_NAME)
+    archivexl_path: Path = mod_path / Path(args.archivexl_folder_name or ARCHIVEXL_FOLDER_NAME)
     license_file: Path = Path(args.license_file or LICENSE_FILE)
 
     temp_path.mkdir(parents=True, exist_ok=True)
 
     _copy_mod_files(
-        mod_name=mod_name, reds_path=reds_path, wkit_path=wkit_path, license_file=license_file, out_dir=temp_path
+        mod_name=mod_name,
+        reds_path=reds_path,
+        wkit_path=wkit_path,
+        archivexl_path=archivexl_path,
+        license_file=license_file,
+        out_dir=temp_path,
     )
 
     dist_file: Path = dist_path / Path(f"{mod_name}-{mod_version}")
@@ -94,6 +123,12 @@ def install_args(
         "-wkit",
         help="The name of the folder wolvenkit files are stored in. Defaults to config.WOLVENKIT_FOLDER_NAME",
         default=WOLVENKIT_FOLDER_NAME,
+    )
+    parser.add_argument(
+        "--archivexl-folder-name",
+        "-archivexl",
+        help="The name of the folder archivexl files are stored in. Defaults to config.ARCHIVEXL_FOLDER_NAME",
+        default=ARCHIVEXL_FOLDER_NAME,
     )
     parser.add_argument(
         "--license-file",
@@ -143,6 +178,12 @@ def pack_args(
         "-wolvenkit",
         help="The name of the folder wolvenkit files are stored in. Defaults to config.WOLVENKIT_FOLDER_NAME",
         default=WOLVENKIT_FOLDER_NAME,
+    )
+    parser.add_argument(
+        "--archivexl-folder-name",
+        "-archivexl",
+        help="The name of the folder archivexl files are stored in. Defaults to config.ARCHIVEXL_FOLDER_NAME",
+        default=ARCHIVEXL_FOLDER_NAME,
     )
     parser.add_argument(
         "--license-file",
