@@ -35,9 +35,11 @@ The game's XP curve stops at level 60, by default this mod extends the curve up 
 
 There are also various XP multiplier sliders, for character level, streetcred, and all the various skill types.
 
-![Settings page (1/2)](./docs/images/settings_0.png)
+![Settings page (1/3)](./docs/images/settings_0.png)
 
-![Settings page (2/2)](./docs/images/settings_1.png)
+![Settings page (2/3)](./docs/images/settings_1.png)
+
+![Settings page (3/3)](./docs/images/settings_2.png)
 
 ## How to Use
 
