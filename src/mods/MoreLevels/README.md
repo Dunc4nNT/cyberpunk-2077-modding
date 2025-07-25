@@ -21,6 +21,11 @@ Mandatory and optional requirements for use of this mod.
 3. Unzip the downloaded file into your `Cyberpunk 2077` directory.
 4. Launch the game.
 
+## Uninstallation
+
+1. Remove all the previously installed files. If you don't remember what files, find the version you installed on [NexusMods](https://www.nexusmods.com/cyberpunk2077/mods/22768?tab=files) or [GitHub](https://github.com/Dunc4nNT/cyberpunk-2077-modding/releases), and see the files that release contains.
+2. If you uninstall this mod after passing the vanilla level 60 cap, you'll run into various issues, such as certain vendors not stocking any items. You can use [CET](https://www.nexusmods.com/cyberpunk2077/mods/107) and enter the following command in its console to set your level back to 60: `Game.SetLevel("Level", 60, 1)`.
+
 ## Compatibility
 
 This mod is compatible with Cyberpunk 2077 version 2.3 and 2.21.
