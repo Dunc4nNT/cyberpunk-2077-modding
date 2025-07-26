@@ -4,6 +4,7 @@ from pathlib import Path
 
 from config import (
     ARCHIVEXL_FOLDER_NAME,
+    AUDIOWARE_FOLDER_NAME,
     CP2077_FOLDER,
     DIST_FOLDER,
     LICENSE_FILE,
@@ -14,7 +15,13 @@ from config import (
 
 
 def _copy_mod_files(
-    mod_name: str, reds_path: Path, wkit_path: Path, archivexl_path: Path, license_file: Path, out_dir: Path
+    mod_name: str,
+    reds_path: Path,
+    wkit_path: Path,
+    archivexl_path: Path,
+    audioware_path: Path,
+    license_file: Path,
+    out_dir: Path,
 ) -> None:
     if reds_path.exists():
         reds_out_path: Path = Path(out_dir / "r6/scripts" / mod_name)
@@ -40,6 +47,12 @@ def _copy_mod_files(
         for archivexl_file in archivexl_path.glob("**/*.archive.xl"):
             shutil.copy(archivexl_file, archivexl_out_path)
 
+    if audioware_path.exists():
+        audioware_out_path: Path = Path(out_dir / "r6/audioware" / mod_name)
+        audioware_out_path.mkdir(parents=True, exist_ok=True)
+
+        shutil.copytree(audioware_path, audioware_out_path, dirs_exist_ok=True)
+
     # TODO: change all these paths to easily configurable settings in the CLI
     shared_path: Path = Path("../src/shared")
     shared_reds_user_hints_path: Path = shared_path / "redsUserHints"
@@ -59,6 +72,7 @@ def install_mods(parser: argparse.ArgumentParser, args: argparse.Namespace) -> N
     reds_path: Path = mod_path / Path(args.redscript_folder_name or REDSCRIPT_FOLDER_NAME)
     wkit_path: Path = mod_path / Path(args.wolvenkit_folder_name or WOLVENKIT_FOLDER_NAME)
     archivexl_path: Path = mod_path / Path(args.archivexl_folder_name or ARCHIVEXL_FOLDER_NAME)
+    audioware_path: Path = mod_path / Path(args.audioware_folder_name or AUDIOWARE_FOLDER_NAME)
     license_file: Path = Path(args.license_file or LICENSE_FILE)
 
     _copy_mod_files(
@@ -66,6 +80,7 @@ def install_mods(parser: argparse.ArgumentParser, args: argparse.Namespace) -> N
         reds_path=reds_path,
         wkit_path=wkit_path,
         archivexl_path=archivexl_path,
+        audioware_path=audioware_path,
         license_file=license_file,
         out_dir=game_path,
     )
@@ -82,6 +97,7 @@ def pack_mods(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None
     reds_path: Path = mod_path / Path(args.redscript_folder_name or REDSCRIPT_FOLDER_NAME)
     wkit_path: Path = mod_path / Path(args.wolvenkit_folder_name or WOLVENKIT_FOLDER_NAME)
     archivexl_path: Path = mod_path / Path(args.archivexl_folder_name or ARCHIVEXL_FOLDER_NAME)
+    audioware_path: Path = mod_path / Path(args.audioware_folder_name or AUDIOWARE_FOLDER_NAME)
     license_file: Path = Path(args.license_file or LICENSE_FILE)
 
     temp_path.mkdir(parents=True, exist_ok=True)
@@ -91,6 +107,7 @@ def pack_mods(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None
         reds_path=reds_path,
         wkit_path=wkit_path,
         archivexl_path=archivexl_path,
+        audioware_path=audioware_path,
         license_file=license_file,
         out_dir=temp_path,
     )
@@ -140,6 +157,12 @@ def install_args(
         "-archivexl",
         help="The name of the folder archivexl files are stored in. Defaults to config.ARCHIVEXL_FOLDER_NAME",
         default=ARCHIVEXL_FOLDER_NAME,
+    )
+    parser.add_argument(
+        "--audioware-folder-name",
+        "-audioware",
+        help="The name of the folder audioware files are stored in. Defaults to config.ARCHIVEXL_FOLDER_NAME",
+        default=AUDIOWARE_FOLDER_NAME,
     )
     parser.add_argument(
         "--license-file",
@@ -195,6 +218,12 @@ def pack_args(
         "-archivexl",
         help="The name of the folder archivexl files are stored in. Defaults to config.ARCHIVEXL_FOLDER_NAME",
         default=ARCHIVEXL_FOLDER_NAME,
+    )
+    parser.add_argument(
+        "--audioware-folder-name",
+        "-audioware",
+        help="The name of the folder audioware files are stored in. Defaults to config.ARCHIVEXL_FOLDER_NAME",
+        default=AUDIOWARE_FOLDER_NAME,
     )
     parser.add_argument(
         "--license-file",

@@ -1,0 +1,22 @@
+version: 1.0.0
+sfx:
+  nevertoxic_friendlyvehicles_maimai_enter_0:
+    file: ./sfx/maimai_enter_0.wav
+    usage: on-demand
+    settings:
+      volume: 0.3
+  nevertoxic_friendlyvehicles_maimai_enter_1:
+    file: ./sfx/maimai_enter_1.wav
+    usage: on-demand
+    settings:
+      volume: 0.3
+  nevertoxic_friendlyvehicles_maimai_exit_0:
+    file: ./sfx/maimai_exit_0.wav
+    usage: on-demand
+    settings:
+      volume: 0.3
+  nevertoxic_friendlyvehicles_maimai_exit_1:
+    file: ./sfx/maimai_exit_1.wav
+    usage: on-demand
+    settings:
+      volume: 0.3
