@@ -4,6 +4,7 @@ Gives all vehicles the MaiMai enter and exit sound.
 
 ## Prerequisites
 
+- [Redscript 0.5](https://www.nexusmods.com/cyberpunk2077/mods/1511)
 - [Audioware 1.4.3](https://www.nexusmods.com/cyberpunk2077/mods/12001)
 
 ## Installation
