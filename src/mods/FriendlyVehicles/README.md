@@ -4,6 +4,8 @@ Gives all vehicles the MaiMai enter and exit sound.
 
 ## Prerequisites
 
+Mandatory and optional requirements for use of this mod.
+
 - [Redscript 0.5](https://www.nexusmods.com/cyberpunk2077/mods/1511)
 - [Audioware 1.4.3](https://www.nexusmods.com/cyberpunk2077/mods/12001)
 
@@ -29,7 +31,6 @@ Just play the game like you normally would and the audio will play whenever you 
 ## Acknowledgements
 
 The audio files are extracted from the game, these are NOT made by me, but belong to CDPR. I'd love to be able to just play the native audiofiles, but there doesn't appear to be an easy way of increasing their volume, and in my opinion, the maimai audio is very quiet. Because of that, they're included (unaltered) in this repository, located in `audioware/sfx`.
-
 
 ## Notes
 
